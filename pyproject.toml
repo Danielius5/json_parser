@@ -1,0 +1,25 @@
+[tool.poetry]
+name = "parser-combinator"
+version = "0.1.0"
+description = ""
+authors = ["Danielius Sukys <sukys.danielius@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+mypy = "^1.5.1"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.4.2"
+black = "^23.9.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.pytest.ini_options]
+pythonpath = [
+  "."
+]
+[mypy]
+strict = true
