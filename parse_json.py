@@ -103,15 +103,21 @@ class ParseQuotes:
 class ParseCurlyBrackets:
     def parse(self, string: str) -> Result:
         if string[0] == "{":
+            in_quotes = False
+
             open_number = 0
 
             end_bracket_ind = -1
 
             for i, char in enumerate(string):
-                if char == "{":
+                if char == '"':
+                    if string[i - 1] != "\\":
+                        in_quotes = not in_quotes
+
+                if char == "{" and not in_quotes:
                     open_number += 1
 
-                if char == "}":
+                if char == "}" and not in_quotes:
                     open_number -= 1
 
                 if open_number == 0:
@@ -131,14 +137,19 @@ class ParseSquareBrackets:
     def parse(self, string: str) -> Result:
         if string[0] == "[":
             open_number = 0
+            in_quotes = False
 
             end_bracket_ind = -1
 
             for i, char in enumerate(string):
-                if char == "[":
+                if char == '"':
+                    if string[i - 1] != "\\":
+                        in_quotes = not in_quotes
+
+                if char == "[" and not in_quotes:
                     open_number += 1
 
-                if char == "]":
+                if char == "]" and not in_quotes:
                     open_number -= 1
 
                 if open_number == 0:

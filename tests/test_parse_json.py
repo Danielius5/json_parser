@@ -612,6 +612,12 @@ class TestJsonParser:
             }
         )
 
-        # Unfortunately main limitation for now is that this would crash because
-        # it does not support [] and {} within string values unfortunately
-        # assert self.parser.parse('{"abc":"d}"}') == {"abc":"d}"}
+        assert self.parser.parse(
+            '{"abc":"d}[[{}{{{}}}}}}}}{}{[][][][[[][][][][][][][][[[[[[[]]][][][][]]]]]]]}"}'
+        ) == {
+            "abc": "d}[[{}{{{}}}}}}}}{}{[][][][[[][][][][][][][][[[[[[[]]][][][][]]]]]]]}"
+        }
+        assert self.parser.parse('["[","{]"]') == ["[", "{]"]
+        assert self.parser.parse('["[[["]') == ["[[["]
+        assert self.parser.parse('["{{{"]') == ["{{{"]
+        assert self.parser.parse(r'["\"{{{"]') == [r"\"{{{"]
